@@ -1,10 +1,18 @@
 <resources>
-    <string name="app_name">Wear OS</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">From the Square world,\nHello, %1$s!</string>
-    <string name="tile_label">Example tile</string>
-    <string name="complication_label">Example complication</string>
+    <string name="app_name">Driver Care</string>
+
+    <string name="heart_rate_icon_description">Heart Rate Icon</string>
+    <string name="heart_rate_value">75</string>
+    <string name="heart_rate_unit">bpm</string>
+
+    <string name="location_icon_description">Location Icon</string>
+    <string name="location_value">-6.2088, 106.8456</string>
+    <string name="location_unit">Lat/Lon</string>
+
+    <string name="chat_bubble_icon_description">Chat Bubble Icon</string>
+    <string name="chat_bubble_value">Chat Bubble</string>
+    <string name="chat_bubble_unit">Unit</string>
+
+
 </resources>
+

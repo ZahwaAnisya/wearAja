@@ -1,29 +1,21 @@
-/* While this template provides a good starting point for using Wear Compose, you can always
- * take a look at https://github.com/android/wear-os-samples/tree/main/ComposeStarter to find the
- * most up to date changes to the libraries and their usages.
- */
-
 package com.example.wearos.presentation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.DirectionsWalk
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.wear.compose.material.MaterialTheme
+import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.tooling.preview.devices.WearDevices
@@ -33,10 +25,7 @@ import com.example.wearos.presentation.theme.WearOSTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-
         super.onCreate(savedInstanceState)
-
-        setTheme(android.R.style.Theme_DeviceDefault)
 
         setContent {
             WearApp("Android")
@@ -44,29 +33,75 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun WearApp(greetingName: String) {
     WearOSTheme {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            contentAlignment = Alignment.Center
+                .background(MaterialTheme.colors.background)
+                .padding(10.dp) // Padding agar tidak terlalu dekat dengan tepi
         ) {
-            TimeText()
-            Greeting(greetingName = greetingName)
+            // TimeText tetap di atas
+            TimeText(
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(20.dp), // Jaga jarak dari tepi layar
+                verticalArrangement = Arrangement.Top, // Elemen diatur dari atas ke bawah
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Row untuk ikon heart rate dan lokasi (sejajar)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    // Ikon Heart Rate
+                    Image(
+                        painter = painterResource(id = R.drawable.heart_rate),
+                        contentDescription = "Heart Rate Icon",
+                        modifier = Modifier
+                            .size(30.dp)
+                            .padding(end = 8.dp) // Beri jarak dengan ikon location
+                    )
+
+                    // Ikon Location
+                    LocationIcon()
+                }
+
+                Spacer(modifier = Modifier.weight(1f)) // Memberi ruang agar teks greeting tetap di tengah
+
+                // Teks Greeting di tengah layar
+                Greeting(
+                    greetingName = greetingName,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
         }
     }
 }
 
 @Composable
-fun Greeting(greetingName: String) {
+fun LocationIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_location), // Menggunakan Vector Asset
+        contentDescription = "Location",
+        tint = MaterialTheme.colors.primary,
+        modifier = Modifier
+            .size(24.dp)
+    )
+}
+
+@Composable
+fun Greeting(greetingName: String, modifier: Modifier = Modifier) {
     Text(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.primary,
-        text = stringResource(R.string.hello_world, greetingName)
+        text = "Welcome to Wear OS, $greetingName!"
     )
 }
 
